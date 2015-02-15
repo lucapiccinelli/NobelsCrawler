@@ -11,7 +11,7 @@ from HTMLParser import HTMLParser
 
 global nobel_prizes_list 
 
-def extraxt_list_from_html(html, regex):
+def extract_list_from_html(html, regex):
     htmlParser = HTMLParser()
     l = []
     regex = re.compile(regex)
@@ -24,15 +24,15 @@ def extraxt_list_from_html(html, regex):
     return l
 
 
-def get_nobel_prized_list():
+def get_nobel_prizes_list():
     nobel_prizes_url = 'http://www.nobelprize.org/nobel_prizes/medicine/laureates/'
     response = urllib2.urlopen(nobel_prizes_url)
     nobel_html = response.read()
-    return extraxt_list_from_html(nobel_html, r'<a\s+href="[^\"]*facts.html">([^<>]+)<\/a>')
+    return extract_list_from_html(nobel_html, r'<a\s+href="[^\"]*facts.html">([^<>]+)<\/a>')
     
     
 def find_page_links(html):
-    return extraxt_list_from_html(html, r'<a\s+href="((?!http)/[^\"]{2,})">')
+    return extract_list_from_html(html, r'<a\s+href="((?!http)/[^\"]{2,})">')
     
 def crawl(domain, url, crawl_dict, fn):
     if url not in crawl_dict:
@@ -53,7 +53,7 @@ def contains_nobel_name(html):
 
 if __name__ == '__main__':
     global nobel_prizes_list
-    nobel_prizes_list = get_nobel_prized_list()
+    nobel_prizes_list = get_nobel_prizes_list()
     print len(nobel_prizes_list)    
        
     crawl('http://www.nobelprize.org', 'http://www.nobelprize.org/nobel_prizes/medicine/laureates/', {}, contains_nobel_name)
