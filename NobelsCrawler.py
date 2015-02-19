@@ -16,11 +16,10 @@ def extract_list_from_html(html, regex):
     htmlParser = HTMLParser()
     l = []
     regex = re.compile(regex)
-    for line in html.splitlines():
-        match = regex.findall(line)
-        if match:
-            for group in match:
-                l.append(str(htmlParser.unescape(group)))
+    match = regex.findall(html)
+    if match:
+        for group in match:
+            l.append(str(htmlParser.unescape(group)))
                 
     return l
 
@@ -30,29 +29,26 @@ def get_nobel_prizes_list():
     response = urllib2.urlopen(nobel_prizes_url)
     nobel_html = response.read()
     nobels_list = extract_list_from_html(nobel_html, r'<a\s+href="[^\"]*facts.html">([^<>]+)<\/a>')
-    nobel_names_list1 = []
+    nobel_names_list1 = []    
+    nobel_names_list2 = []
+    nobel_names_list3 = []
     for x in nobels_list:
         name = x.split(' ')
         if len(name[0]) > 2:
             nobel_names_list1.append(name[0])
         else:
             nobel_names_list1.append(name[1])
-    
-    nobel_names_list2 = []
-    for x in nobels_list:
-        name = x.split(' ')
+            
         if len(name[-1]) > 2 and name[-1][-1] != '.':
             nobel_names_list2.append(name[-1])
         else:
             nobel_names_list2.append(name[-2])
             
-    nobel_names_list3 = []
-    for x in nobels_list:
-        name = x.split(' ')
         name_str = ''
         for n in name:
             if len(n) > 2 and n[-1] != '.':
                 name_str += n + ' '
+        
                 
         nobel_names_list3.append(name_str[:-1])
         
