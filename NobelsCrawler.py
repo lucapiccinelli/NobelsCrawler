@@ -33,8 +33,8 @@ def get_nobel_prizes_list():
     nobel_names_list2 = []
     nobel_names_list3 = []
     for x in nobels_list:
-        name = x.split(' ')
-        if len(name[0]) > 2:
+        name = [s.rstrip(',') for s in x.split(' ')]
+        if len(name[0]) > 2 and name[0] != 'Sir':
             nobel_names_list1.append(name[0])
         else:
             nobel_names_list1.append(name[1])
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     nobel_prizes_list = get_nobel_prizes_list()
     print len(nobel_prizes_list)
        
-    crawl('http://cgmone.cgm.ag/cgm_com/', 'http://cgmone.cgm.ag/cgm_com/index.en.jsp', {}, contains_nobel_name)
+    crawl(r'http://cgmone.cgm.ag/cgm_com/', r'http://cgmone.cgm.ag/cgm_com/index.en.jsp', {}, contains_nobel_name)
     
     
     
