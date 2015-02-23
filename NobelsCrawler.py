@@ -66,7 +66,7 @@ def get_nobel_prizes_list():
     
     
 def find_page_links(html):
-    return extract_list_from_html(html, r'<a\s+[^>]*href="((?!http)[^\"#]{2,})"[^>]*>')
+    return extract_list_from_html(html, r'<a\s+[^>]*href="((?!http)[^\"#]+)"[^>]*>')
     
 def crawl(domain, url, crawl_dict, fn):
     if url not in crawl_dict and not url.endswith('.jpg') and not url.endswith('.pdf') and not url.endswith('.png'):
